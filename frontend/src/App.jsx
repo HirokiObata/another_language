@@ -1,19 +1,25 @@
 import { useState } from "react";
 
-import "./App.css";
-import ScoreCard from "./component/ScoreCrad";
-import ScoreLog from "./component/SCORE_log";
+// import "./App.css";
+import ScoreCard from "./component/ScoreCard";
+import ScoreLog from "./component/Score_log";
 import NewScore from "./component/NewScore";
+import { Center, Space, Text, Title } from "@mantine/core";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [viewState, setViewState] = useState(true);
 
   return (
     <>
-      <div>GOLF_SCORE_MEMO</div>
-      <ScoreCard />
-      <ScoreLog />
-      <NewScore />
+      <Center>
+        <Title order={1}>GOLF_SCORE_MEMO</Title>
+      </Center>
+      <Space h="md" />
+      {viewState ? (
+        <ScoreLog setViewState={setViewState} />
+      ) : (
+        <NewScore setViewState={setViewState} />
+      )}
     </>
   );
 }

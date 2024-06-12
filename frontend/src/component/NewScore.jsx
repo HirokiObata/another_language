@@ -1,7 +1,66 @@
+import { Button, Center, Group, Select, Space, Stack } from "@mantine/core";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { DateInput, DatePicker } from "@mantine/dates";
+import CreateScoreInput from "./CreatScoreInput";
 const NewScore = () => {
+  const [courses, setCourses] = useState([]);
+  const [value, setValue] = useState(new Date());
+  const [names, setNames] = useState([]);
+  const [indexKey, setIndexKey] = useState("1");
+
+  useEffect(() => {
+    (async () => {
+      const course = await axios("/api/golf_course").then((res) => res.data);
+      console.log("course: ", course);
+      const changeKey = course.map((obj) => {
+        return { value: `${obj.id}`, label: obj.course_name };
+      });
+      setCourses(changeKey);
+      const names = await axios("/api/player").then((res) => res.data);
+      const changeNames = names.map((obj) => {
+        return { value: `${obj.id}`, label: obj.name };
+      });
+      setNames(changeNames);
+    })();
+  }, []);
+
   return (
     <>
-      <div>NewScore</div>
+      <Group justify="space-between">
+        <DateInput
+          valueFormat="YYYY/MM/DD"
+          ml={"10%"}
+          value={value}
+          onChange={setValue}
+          label="日付入力"
+          placeholder="日付選択"
+        />
+        <Select mr={"10%"} data={courses} label="コースを選択" />
+      </Group>
+      <Space h="xl" />
+      <Space h="xl" />
+      <Stack>
+        <>
+          {indexKey.split("").map((i) => (
+            <CreateScoreInput
+              names={names}
+              key={i}
+              indexKey={i}
+              value={value}
+            />
+          ))}
+        </>
+      </Stack>
+      <Button
+        onClick={() => {
+          indexKey.length <= 3
+            ? setIndexKey(indexKey + `${indexKey.length + 1}`)
+            : "";
+        }}
+      >
+        +
+      </Button>
     </>
   );
 };

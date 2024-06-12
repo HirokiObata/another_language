@@ -3,6 +3,8 @@ package com.example.another_language
 import java.sql.Date
 
 data class ScoreRequest(
+    val courseid: Long,
+    val date: Date,
     val hole1: Long,
     val hole2: Long,
     val hole3: Long,
@@ -21,8 +23,7 @@ data class ScoreRequest(
     val hole16: Long,
     val hole17: Long,
     val hole18: Long,
-    val date: Date,
-    val playerid: Long,
-    val courseid: Long
+    val playerid: Long
+
 
 )

@@ -76,17 +76,19 @@ class ScoreRpository(
     }
 
     fun fetchScores() :Array<Score> {
-        val score = jdbcTemplate.query("SELECT * FROM score_card",scoreRowMapper)
+        val score = jdbcTemplate.query("SELECT * FROM score_card ORDER BY id DESC",scoreRowMapper)
         return score.toTypedArray()
     }
 
     fun fetchScoreById(id:Long):Array<Score> {
-        val score = jdbcTemplate.query("SELECT * FROM score_card WHERE player_id = $id",scoreRowMapper)
+        val score = jdbcTemplate.query("SELECT * FROM score_card WHERE player_id = $id ORDER BY id DESC",scoreRowMapper)
         return  score.toTypedArray()
     }
 
     fun postScore(scoreRequest: ScoreRequest) :Long {
-        jdbcTemplate.update("INSERT INTO score_card (hole_1,hole_2, hole_3, hole_4, hole_5, hole_6, hole_7, hole_8, hole_9, hole_10, hole_11, hole_12, hole_13, hole_14, hole_15, hole_16, hole_17, hole_18,date, player_id, course_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        jdbcTemplate.update("INSERT INTO score_card (course_id,date,hole_1,hole_2, hole_3, hole_4, hole_5, hole_6, hole_7, hole_8, hole_9, hole_10, hole_11, hole_12, hole_13, hole_14, hole_15, hole_16, hole_17, hole_18, player_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            scoreRequest.courseid,
+            scoreRequest.date,
             scoreRequest.hole1,
             scoreRequest.hole2,
             scoreRequest.hole3,
@@ -105,9 +107,8 @@ class ScoreRpository(
             scoreRequest.hole16,
             scoreRequest.hole17,
             scoreRequest.hole18,
-            scoreRequest.date,
-            scoreRequest.playerid,
-            scoreRequest.courseid
+            scoreRequest.playerid
+
             )
 
 //        val result = jdbcTemplate.query("SELECT id FROM score_card ORDER BY id DESC LIMIT 1",scoreRowMapper)
