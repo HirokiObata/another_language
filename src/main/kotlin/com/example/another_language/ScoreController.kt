@@ -47,13 +47,14 @@ class ScoreController(@Autowired val scoreRpository: ScoreRpository) {
     }
 
     @DeleteMapping("/api/score_card/{id}")
-    fun deleteScore(@PathVariable("id") id:Long):ResponseEntity.HeadersBuilder<*> {
-        val res = scoreRpository.deleteScore(id)
-        if (res == 0) {
-            return  ResponseEntity.notFound()
-        }
-        println("==================delete id:$id ================================")
-        return ResponseEntity.ok()
+    fun deleteScore(@PathVariable("id") id:Long) :Int{//:ResponseEntity.HeadersBuilder<*> {
+//        val res = scoreRpository.deleteScore(id)
+//        if (res == 0) {
+//            return  ResponseEntity.notFound()
+//        }
+//        println("==================delete id:$id ================================")
+//        return ResponseEntity.ok()
+       return scoreRpository.deleteScore(id)
     }
 
 

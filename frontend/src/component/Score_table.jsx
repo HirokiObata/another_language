@@ -1,9 +1,13 @@
 import { ActionIcon, Table } from "@mantine/core";
-import { IconAdjustments, IconAlignJustified } from "@tabler/icons-react";
+import {
+  IconAdjustments,
+  IconAlignJustified,
+  IconTrash,
+} from "@tabler/icons-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Score_table = ({ scoreCard }) => {
+const Score_table = ({ scoreCard, setScoreCard }) => {
   //   const [scoreCard, setScoreCard] = useState([]);
 
   //   useEffect(() => {
@@ -45,11 +49,18 @@ const Score_table = ({ scoreCard }) => {
         <Table.Td>{outScore + inScore}</Table.Td>
         <Table.Td>{element.date}</Table.Td>
         <Table.Td>
-          <ActionIcon variant="light" aria-label="Settings">
-            <IconAlignJustified
-              style={{ width: "70%", height: "70%" }}
-              stroke={1.5}
-            />
+          <ActionIcon
+            variant="light"
+            aria-label="Settings"
+            onClick={async () => {
+              await axios.delete(`/api/score_card/${element.id}`);
+              const scores = await axios
+                .get("/api/score_card")
+                .then((res) => res.data);
+              setScoreCard(scores);
+            }}
+          >
+            <IconTrash style={{ width: "70%", height: "70%" }} stroke={1.5} />
           </ActionIcon>
         </Table.Td>
       </Table.Tr>

@@ -1,6 +1,6 @@
 import { Button, Center, Group, Select, Space, Stack } from "@mantine/core";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DateInput, DatePicker } from "@mantine/dates";
 import CreateScoreInput from "./CreatScoreInput";
 const NewScore = () => {
@@ -8,6 +8,9 @@ const NewScore = () => {
   const [value, setValue] = useState(new Date());
   const [names, setNames] = useState([]);
   const [indexKey, setIndexKey] = useState("1");
+
+  const buttonRef = React.useRef();
+  const handleClick = () => buttonRef.current.click();
 
   useEffect(() => {
     (async () => {
@@ -48,19 +51,38 @@ const NewScore = () => {
               key={i}
               indexKey={i}
               value={value}
+              buttonRef={buttonRef}
             />
           ))}
         </>
       </Stack>
-      <Button
-        onClick={() => {
-          indexKey.length <= 3
-            ? setIndexKey(indexKey + `${indexKey.length + 1}`)
-            : "";
-        }}
-      >
-        +
-      </Button>
+      <Space h={"md"} />
+
+      <Group ml={"7%"} justify="space-between">
+        <Group>
+          <Button
+            onClick={() => {
+              indexKey.length <= 3
+                ? setIndexKey(indexKey + `${indexKey.length + 1}`)
+                : "";
+            }}
+          >
+            +
+          </Button>
+          <Button
+            onClick={() => {
+              indexKey.length >= 2
+                ? setIndexKey(indexKey.substring(0, indexKey.length - 1))
+                : "";
+            }}
+          >
+            -
+          </Button>
+        </Group>
+        <Button mr={"10%"} onClick={handleClick}>
+          Submit
+        </Button>
+      </Group>
     </>
   );
 };

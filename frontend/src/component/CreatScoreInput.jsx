@@ -4,7 +4,7 @@ import axios from "axios";
 import { fromJSON } from "postcss";
 import { useEffect } from "react";
 
-const CreateScoreInput = ({ names, indexKey, value }) => {
+const CreateScoreInput = ({ names, indexKey, value, buttonRef }) => {
   const holeIndex = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
   ];
@@ -73,7 +73,9 @@ const CreateScoreInput = ({ names, indexKey, value }) => {
           />
         ))}
 
-        <Button type="submit">submit</Button>
+        <Button type="submit" ref={buttonRef}>
+          submit
+        </Button>
       </Group>
     </form>
   );
