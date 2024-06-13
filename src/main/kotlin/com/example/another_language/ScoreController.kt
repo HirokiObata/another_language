@@ -24,20 +24,37 @@ class ScoreController(@Autowired val scoreRpository: ScoreRpository) {
         return scoreRpository.fetchCourese()
     }
 
-    @GetMapping("/api/score_card")
+    @GetMapping("/api/score_cardall")
     fun getScore():Array<Score> {
         println("#############################################get################################")
         return scoreRpository.fetchScores()
     }
 
+    @GetMapping("/api/score_card")
+    fun getScore2():Array<ScoresPlayerAndCourse> {
+        println("#############################################get2################################")
+        return scoreRpository.fetchScoresAll()
+    }
+
     @GetMapping("/api/score_card/{id}")
-    fun getScoreById(@PathVariable("id") id:Long):ResponseEntity<Array<Score>> {
+    fun getScoreById(@PathVariable("id") id:Long):ResponseEntity<Array<ScoresPlayerAndCourse>> {
+        val response = scoreRpository.fetchScoreByIdAll(id)
+        if(response.isEmpty()) {
+            return  ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+        return ResponseEntity.ok(response)
+    }
+
+    @GetMapping("/api/score_cardall/{id}")
+    fun getScoreById2(@PathVariable("id") id:Long):ResponseEntity<Array<Score>> {
         val response = scoreRpository.fetchScoreById(id)
         if(response.isEmpty()) {
             return  ResponseEntity(HttpStatus.NOT_FOUND)
         }
         return ResponseEntity.ok(response)
     }
+
+
 
     @PostMapping("/api/score_card")
     fun saveScore(@RequestBody scoreRequest: ScoreRequest) :Long {

@@ -1,16 +1,20 @@
-import { Button, Center, Group, Select, Space, Stack } from "@mantine/core";
-import axios from "axios";
+import { ActionIcon, Button, Group, Select, Space, Stack } from "@mantine/core";
+import { DateInput } from "@mantine/dates";
 import React, { useEffect, useState } from "react";
-import { DateInput, DatePicker } from "@mantine/dates";
+import axios from "axios";
 import CreateScoreInput from "./CreatScoreInput";
-const NewScore = () => {
+import { IconHome } from "@tabler/icons-react";
+
+const NewScore = ({ setViewState }) => {
   const [courses, setCourses] = useState([]);
   const [value, setValue] = useState(new Date());
   const [names, setNames] = useState([]);
   const [indexKey, setIndexKey] = useState("1");
+  const [selectedCourse, setSelectedCourse] = useState();
 
   const buttonRef = React.useRef();
   const handleClick = () => buttonRef.current.click();
+  console.log({ selectedCourse });
 
   useEffect(() => {
     (async () => {
@@ -32,14 +36,30 @@ const NewScore = () => {
     <>
       <Group justify="space-between">
         <DateInput
-          valueFormat="YYYY/MM/DD"
+          valueFormat="YYYY-MM-DD"
           ml={"10%"}
           value={value}
           onChange={setValue}
           label="日付入力"
           placeholder="日付選択"
         />
-        <Select mr={"10%"} data={courses} label="コースを選択" />
+        <Select
+          mr={"10%"}
+          data={courses}
+          label="コースを選択"
+          value={selectedCourse}
+          onChange={setSelectedCourse}
+        />
+        <ActionIcon
+          mr={"7%"}
+          variant="light"
+          aria-label="Settings"
+          onClick={() => {
+            setViewState(true);
+          }}
+        >
+          <IconHome style={{ width: "100%", height: "100%" }} stroke={1.5} />
+        </ActionIcon>
       </Group>
       <Space h="xl" />
       <Space h="xl" />
@@ -52,6 +72,7 @@ const NewScore = () => {
               indexKey={i}
               value={value}
               buttonRef={buttonRef}
+              selectedCourse={selectedCourse}
             />
           ))}
         </>

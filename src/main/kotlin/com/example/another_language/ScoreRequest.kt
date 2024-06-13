@@ -23,7 +23,8 @@ data class ScoreRequest(
     val hole16: Long,
     val hole17: Long,
     val hole18: Long,
-    val playerid: Long
+    val playerid: Long,
+    val cardno: Long
 
 
 )

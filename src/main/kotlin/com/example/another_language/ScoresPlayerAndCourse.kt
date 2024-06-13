@@ -2,7 +2,7 @@ package com.example.another_language
 
 import java.sql.Date
 
-data class Score(
+data class ScoresPlayerAndCourse(
     val id: Long,
     val hole1: Long,
     val hole2: Long,
@@ -23,8 +23,10 @@ data class Score(
     val hole17: Long,
     val hole18: Long,
     val date: Date,
+    val cardno: Long,
+    val player: String,
+    val course: String,
     val playerid: Long,
-    val courseid: Long,
-    val cardno: Long
+    val courseid: Long
 
 )

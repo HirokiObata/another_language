@@ -1,15 +1,20 @@
-import { Button, Group, NumberInput, Select, Text, Stack } from "@mantine/core";
+import { Button, Group, NumberInput, Select, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import axios from "axios";
-import { fromJSON } from "postcss";
 import { useEffect } from "react";
+import axios from "axios";
 
-const CreateScoreInput = ({ names, indexKey, value, buttonRef }) => {
+const CreateScoreInput = ({
+  names,
+  indexKey,
+  value,
+  buttonRef,
+  selectedCourse,
+}) => {
   const holeIndex = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
   ];
   const form = useForm({
-    mode: "uncontrolled",
+    mode: "controlled",
     initialValues: {
       hole1: "",
       hole2: "",
@@ -32,14 +37,17 @@ const CreateScoreInput = ({ names, indexKey, value, buttonRef }) => {
       date: "",
       playerid: "",
       courseid: "",
+      cardid: 111,
     },
   });
 
   useEffect(() => {
     console.log("Value: ", value);
     console.log("indexkey: ", indexKey);
+    console.log("selectedCourseEffect: ", selectedCourse);
+    form.setFieldValue("courseid", selectedCourse);
     form.setFieldValue("date", value);
-  }, [value]);
+  }, [value, selectedCourse]);
 
   return (
     <form

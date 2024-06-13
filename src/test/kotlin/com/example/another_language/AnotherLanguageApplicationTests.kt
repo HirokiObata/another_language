@@ -6,9 +6,12 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.test.web.client.getForEntity
+
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
-import org.springframework.boot.test.web.client.getForEntity as getForEntity1
+
+
 
 @SpringBootTest (webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AnotherLanguageApplicationTests (
@@ -18,13 +21,25 @@ class AnotherLanguageApplicationTests (
 
 	@Test
 	fun contextLoads() {
+		assertThat(1+2 , equalTo(3))
 	}
 
-//	@Test
-//	fun `GETリクエストでOKを返す`(){
-//		val response = restTemplate.getForEntity1(url = "http://localhost:$port/player", Array<Players>::class.java)
-//		assertThat(response.size, equalTo(0)
-//	}
+	@Test
+	fun `GETリクエストPlayer取得18ninn`(){
+		val response = restTemplate.getForEntity("http://localhost:$port/api/player", Array<Players>::class.java)
+		val player = response.body!!
+		assertThat(player.size, equalTo(18))
+
+	}
+
+
+	@Test
+	fun `GETリクエストscore取得`(){
+		val response = restTemplate.getForEntity("http://localhost:$port/api/score_card", Array<ScoresPlayerAndCourse>::class.java)
+		val player = response.body!!
+		assertThat(player[0].id, equalTo(28))
+
+	}
 
 
 

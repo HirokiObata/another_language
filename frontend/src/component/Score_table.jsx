@@ -1,23 +1,9 @@
 import { ActionIcon, Table } from "@mantine/core";
-import {
-  IconAdjustments,
-  IconAlignJustified,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Score_table = ({ scoreCard, setScoreCard }) => {
-  //   const [scoreCard, setScoreCard] = useState([]);
-
-  //   useEffect(() => {
-  //     (async () => {
-  //       const scores = await axios("/api/score_card").then((res) => res.data);
-  //       console.log("scores: ", scores);
-  //       setScoreCard(scores);
-  //     })();
-  //   }, []);
-
   const rows = scoreCard.map((element) => {
     const outScore =
       element.hole1 +
@@ -42,8 +28,8 @@ const Score_table = ({ scoreCard, setScoreCard }) => {
 
     return (
       <Table.Tr key={element.id}>
-        <Table.Td>{element.playerid}</Table.Td>
-        <Table.Td>{element.courseid}</Table.Td>
+        <Table.Td>{element.player}</Table.Td>
+        <Table.Td>{element.course}</Table.Td>
         <Table.Td>{outScore}</Table.Td>
         <Table.Td>{inScore}</Table.Td>
         <Table.Td>{outScore + inScore}</Table.Td>
@@ -54,9 +40,11 @@ const Score_table = ({ scoreCard, setScoreCard }) => {
             aria-label="Settings"
             onClick={async () => {
               await axios.delete(`/api/score_card/${element.id}`);
+
               const scores = await axios
                 .get("/api/score_card")
                 .then((res) => res.data);
+
               setScoreCard(scores);
             }}
           >

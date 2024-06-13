@@ -1,0 +1,1 @@
+ALTER TABLE score_card ADD COLUMN card_no INTEGER

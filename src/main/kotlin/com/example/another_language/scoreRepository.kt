@@ -45,11 +45,48 @@ class ScoreRowMapper : RowMapper<Score> {
             hole18 = rs.getLong("hole_18"),
             date = rs.getDate("date"),
             playerid = rs.getLong("player_id"),
-            courseid = rs.getLong("course_id")
+            courseid = rs.getLong("course_id"),
+            cardno = rs.getLong("card_no")
 
         )
     }
 }
+
+@Component
+class ScoreRowMapperJoin : RowMapper<ScoresPlayerAndCourse> {
+    override fun mapRow(rs: ResultSet, rowNum: Int): ScoresPlayerAndCourse {
+        return ScoresPlayerAndCourse(
+            id = rs.getLong("id"),
+            hole1 = rs.getLong("hole_1"),
+            hole2 = rs.getLong("hole_2"),
+            hole3 = rs.getLong("hole_3"),
+            hole4 = rs.getLong("hole_4"),
+            hole5 = rs.getLong("hole_5"),
+            hole6 = rs.getLong("hole_6"),
+            hole7 = rs.getLong("hole_7"),
+            hole8 = rs.getLong("hole_8"),
+            hole9 = rs.getLong("hole_9"),
+            hole10 = rs.getLong("hole_10"),
+            hole11 = rs.getLong("hole_11"),
+            hole12 = rs.getLong("hole_12"),
+            hole13 = rs.getLong("hole_13"),
+            hole14 = rs.getLong("hole_14"),
+            hole15 = rs.getLong("hole_15"),
+            hole16 = rs.getLong("hole_16"),
+            hole17 = rs.getLong("hole_17"),
+            hole18 = rs.getLong("hole_18"),
+            date = rs.getDate("date"),
+            cardno = rs.getLong("card_no"),
+            player = rs.getString(22),
+            course = rs.getString(23),
+            playerid = rs.getLong("player_id"),
+            courseid = rs.getLong("course_id"),
+
+
+        )
+    }
+}
+
 
 
 
@@ -59,7 +96,8 @@ class ScoreRpository(
     @Autowired val jdbcTemplate: JdbcTemplate,
     @Autowired val playerRowMapper: PlayerRowMapper,
     @Autowired val courseRowMapper: CourseRowMapper,
-    @Autowired val scoreRowMapper: ScoreRowMapper
+    @Autowired val scoreRowMapper: ScoreRowMapper,
+    @Autowired val scoreRowMapperJoin: ScoreRowMapperJoin
 ) {
 
     fun fetchPlayers():Array<Players> {
@@ -80,13 +118,30 @@ class ScoreRpository(
         return score.toTypedArray()
     }
 
+    fun fetchScoresAll() : Array<ScoresPlayerAndCourse> {
+        val scores = jdbcTemplate.query("SELECT score_card.id , hole_1 , hole_2 , hole_3 , hole_4 , hole_5 , hole_6 , hole_7 , hole_8 , hole_9 , hole_10 , hole_11 , hole_12 , hole_13 , hole_14 , hole_15 , hole_16 , hole_17 , hole_18 ,date, card_no,player.name, golf_course.course_name ,player_id ,course_id  from score_card   left outer join player on score_card.player_id = player.id left outer join golf_course on score_card.course_id = golf_course.id ORDER BY id DESC",
+            scoreRowMapperJoin)
+        return scores.toTypedArray()
+    }
+
     fun fetchScoreById(id:Long):Array<Score> {
         val score = jdbcTemplate.query("SELECT * FROM score_card WHERE player_id = $id ORDER BY id DESC",scoreRowMapper)
         return  score.toTypedArray()
     }
 
+
+    fun fetchScoreByIdAll(id:Long):Array<ScoresPlayerAndCourse> {
+        val score = jdbcTemplate.query("SELECT score_card.id , hole_1 , hole_2 , hole_3 , hole_4 , hole_5 , hole_6 , hole_7 , hole_8 , hole_9 , hole_10 , hole_11 , hole_12 , hole_13 , hole_14 , hole_15 , hole_16 , hole_17 , hole_18 ,date, card_no,player.name, golf_course.course_name ,player_id ,course_id  from score_card   left outer join player on score_card.player_id = player.id left outer join golf_course on score_card.course_id = golf_course.id WHERE player_id = $id ORDER BY id DESC",
+            scoreRowMapperJoin)
+        return  score.toTypedArray()
+    }
+
+
+
+
+
     fun postScore(scoreRequest: ScoreRequest) :Long {
-        jdbcTemplate.update("INSERT INTO score_card (course_id,date,hole_1,hole_2, hole_3, hole_4, hole_5, hole_6, hole_7, hole_8, hole_9, hole_10, hole_11, hole_12, hole_13, hole_14, hole_15, hole_16, hole_17, hole_18, player_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        jdbcTemplate.update("INSERT INTO score_card (course_id,date,hole_1,hole_2, hole_3, hole_4, hole_5, hole_6, hole_7, hole_8, hole_9, hole_10, hole_11, hole_12, hole_13, hole_14, hole_15, hole_16, hole_17, hole_18, player_id,card_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             scoreRequest.courseid,
             scoreRequest.date,
             scoreRequest.hole1,
@@ -107,7 +162,8 @@ class ScoreRpository(
             scoreRequest.hole16,
             scoreRequest.hole17,
             scoreRequest.hole18,
-            scoreRequest.playerid
+            scoreRequest.playerid,
+            scoreRequest.cardno
 
             )
 

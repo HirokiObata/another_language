@@ -1,15 +1,8 @@
-import {
-  ActionIcon,
-  Button,
-  Container,
-  Flex,
-  Group,
-  Select,
-} from "@mantine/core";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Score_table from "./Score_table";
+import { ActionIcon, Container, Group, Select } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Score_table from "./Score_table";
 
 const ScoreLog = ({ setViewState }) => {
   const [nameList, setNameList] = useState([]);
@@ -33,8 +26,8 @@ const ScoreLog = ({ setViewState }) => {
       <div>
         <Group justify="space-between">
           <Select
-            ml={"30"}
-            w={"30%"}
+            ml={"7%"}
+            w={"300"}
             data={nameList}
             onChange={async (value) => {
               try {

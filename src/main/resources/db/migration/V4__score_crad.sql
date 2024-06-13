@@ -20,5 +20,7 @@ CREATE TABLE score_card (
  hole_18 INTEGER,
  date DATE,
  player_id INTEGER,
- course_id INTEGER
+ course_id INTEGER,
+ FOREIGN KEY(player_id) REFERENCES player(id),
+ FOREIGN KEY(course_id) REFERENCES golf_course(id)
 );

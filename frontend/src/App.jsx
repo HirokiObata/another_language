@@ -12,7 +12,9 @@ function App() {
   return (
     <>
       <Center>
-        <Title order={1}>GOLF_SCORE_MEMO</Title>
+        <Title order={1} ff={"Meiryo"}>
+          GOLF_SCORE_MEMO
+        </Title>
       </Center>
       <Space h="md" />
       {viewState ? (
