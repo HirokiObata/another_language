@@ -1,4 +1,12 @@
-import { ActionIcon, Button, Group, Select, Space, Stack } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Center,
+  Group,
+  Select,
+  Space,
+  Stack,
+} from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -78,7 +86,6 @@ const NewScore = ({ setViewState }) => {
         </>
       </Stack>
       <Space h={"md"} />
-
       <Group ml={"7%"} justify="space-between">
         <Group>
           <Button

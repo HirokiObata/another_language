@@ -1,7 +1,6 @@
 import { ActionIcon, Table } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 const Score_table = ({ scoreCard, setScoreCard }) => {
   const rows = scoreCard.map((element) => {
@@ -56,7 +55,7 @@ const Score_table = ({ scoreCard, setScoreCard }) => {
   });
 
   return (
-    <Table>
+    <Table bgcolor="#DCE4F5">
       <Table.Thead>
         <Table.Tr>
           <Table.Th>playerName</Table.Th>

@@ -72,9 +72,10 @@ const CreateScoreInput = ({
         />
         {holeIndex.map((i) => (
           <NumberInput
-            hideControls
-            w={40}
+            // hideControls
+            w={65}
             m={1}
+            min={1}
             key={form.key(`hole${i}`)}
             {...form.getInputProps(`hole${i}`)}
             label={`${i}H`}

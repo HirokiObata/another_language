@@ -49,7 +49,15 @@ const ScoreLog = ({ setViewState }) => {
               setViewState(false);
             }}
           >
-            <IconPlus style={{ width: "70%", height: "70%" }} stroke={1.5} />
+            <IconPlus
+              style={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "#DCE4F5",
+              }}
+              stroke={1.5}
+              color="#000"
+            />
           </ActionIcon>
         </Group>
         <Container>

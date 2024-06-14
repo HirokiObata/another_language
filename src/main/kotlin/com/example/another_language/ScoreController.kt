@@ -26,13 +26,11 @@ class ScoreController(@Autowired val scoreRpository: ScoreRpository) {
 
     @GetMapping("/api/score_cardall")
     fun getScore():Array<Score> {
-        println("#############################################get################################")
         return scoreRpository.fetchScores()
     }
 
     @GetMapping("/api/score_card")
     fun getScore2():Array<ScoresPlayerAndCourse> {
-        println("#############################################get2################################")
         return scoreRpository.fetchScoresAll()
     }
 
@@ -58,19 +56,13 @@ class ScoreController(@Autowired val scoreRpository: ScoreRpository) {
 
     @PostMapping("/api/score_card")
     fun saveScore(@RequestBody scoreRequest: ScoreRequest) :Long {
-        println("----------------------------------------post------------------------------------")
         val res = scoreRpository.postScore(scoreRequest)
         return res
     }
 
     @DeleteMapping("/api/score_card/{id}")
     fun deleteScore(@PathVariable("id") id:Long) :Int{//:ResponseEntity.HeadersBuilder<*> {
-//        val res = scoreRpository.deleteScore(id)
-//        if (res == 0) {
-//            return  ResponseEntity.notFound()
-//        }
-//        println("==================delete id:$id ================================")
-//        return ResponseEntity.ok()
+
        return scoreRpository.deleteScore(id)
     }
 

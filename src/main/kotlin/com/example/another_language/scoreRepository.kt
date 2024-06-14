@@ -173,8 +173,7 @@ class ScoreRpository(
     }
 
     fun deleteScore(id:Long) :Int{
-        val res = jdbcTemplate.update("DELETE FROM score_card WHERE id = $id")
-        println("===============res $res ====================================")
+        val res = jdbcTemplate.update("DELETE FROM score_card WHERE id = ?",id)
         return res
     }
 
